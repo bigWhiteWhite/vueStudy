@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	动态路由：使用参数将所有路由对应一个组件，如userlisi，userzhangsan都对应User一个组件
+	嵌套路由：每个子路由都对应一个组件，如父路由home,子路由news、message分别对应一个组件
+	
+    如果在一个模块化工程中使用它，必须要通过 Vue.use() 明确地安装路由功能：
+		创建一个router目录，定义路由模块js，将路由器放在里面
+		1:定义路由组件
+				import Vue from 'vue'
+				import VueRouter from 'vue-router'
+				Vue.use(VueRouter)
+
+
+				export  default new VueRouter ({//用于创建路由器的构造函数,VueRouter是路由器
+				//n个路由放在路由器里面,放在数组里，数组里放在对象，一个对象一个路由
+					routes: [
+						{
+						path:'/about',
+						component:About
+						},
+						{
+						path:'/home',
+						component:Home
+						}
+
+					]
+				})
+
+		3.在入口文件里面引入模块
+			import router from './router'
+
+			new Vue({//配置对象的属性名都是一些确定的名称，不能随便修改
+			el: '#app',
+			components: { App },
+			template: '<App/>',
+			router
+			})
+
+		4.路由使用，在HTML上添加路由链接和路由显示
+			<router-link to="/xxx"></router-link>  /xxx名字要和路由器配置的path相同
+			<router-view></router-view>
+
+		5.优化路由器配置
+			linkActiveClass:'active'//指定选中的路由链接的class，也就是可以把router-link-active改为active
+				.router-link-active{//一个css样式，当路由链接被点击就会自动给点击的路由链接的标签加上router-link-active类，所以不用特意把router-link-active加给标签
+					color: red ;
+				}
+
+		6.默认显示哪个路由组件
+			{
+				path:'',            这里不加斜杠,而且因为是嵌套的，应该写入children里面
+				redirect:'/home/news'
+			}
+
+			{
+				path:'/',
+				redirect:'/about'
+			}
+
+		嵌套路由
+			1.走一遍流程
+			2.将新的组件引入路由模块
+			3.在要嵌套的组件上加上children
+			4.嵌套路由组件如果前面有/，那么会将前面的路径覆盖掉，直接去/news，而不是home/news
+			children:[
+				{
+					path:'/home/message',//path最左侧的/永远代表根路由
+					component:Message
+				},
+				{
+					path:'news',        //省略写法，去掉斜杠
+					component:News
+				}
+			]
+			4.在哪里使用路由组件，要看嵌套的路由组件在哪里显示
+				路由器：管理路由
+				路由：path：{
+								后台：处理请求的回调函数
+								前台：组件
+							}
+					
+</body>
+</html>

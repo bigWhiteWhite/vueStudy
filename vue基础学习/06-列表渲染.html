@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    1.列表显示
+        数组：v-for/home
+        对象：v-for/key
+    2.列表的更新显示
+        删除item
+        替换item
+-->
+    <div id="demo">
+        <h2>测试：v-for 遍历数组</h2>
+        <ul>
+            <li v-for="(p,index) in persons" :key="index">
+                {{index}}---{{p.name}}---{{p.age}}
+                --- <button @click="deleteP(index)">删除</button>
+                --- <button @click="updateP(index,{name:'cat',age:20})">更新</button>
+            </li><!--key前面要加冒号，表示为表达式，不然辨认为html-->
+        </ul>
+
+        <h2>测试：v-for 遍历对象</h2>
+        <ul>
+            <li v-for="(value,key) in persons[1]" :key="key"><!--value:属性值  key：属性名-->
+                {{value}}---{{key}}
+            </li>
+        </ul>
+    </div>
+
+</body>
+
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+            //vue本身只是监视了persons的改变，没有监视数组内部数据的改变
+            //vue重写了数组中的一系列改变数组内部数据的方法（先调用原生，更新界面）--》数组内部改变，界面自动变化
+            //前提是要调用改变数组内部数据的方法
+            new Vue({
+                el: '#demo',
+                data: {
+                    persons:[
+                        {name:'Tom',age:18},
+                        {name:'Tsn',age:15},
+                        {name:'Tck',age:16},
+                        {name:'Jak',age:17}
+                    ]
+                },
+                methods:{
+                    deleteP(index){
+                        //删除persons中指定的index的p，
+                        this.persons.splice(index,1)
+                    },
+                    updateP(index,newP){
+                        //并没有改变persons本身,没有调用数组方法，改变数组内部的结构，它不知道，vue不会更新界面
+                        //this.persons[home]=newP
+                        //this.persons[home]=[]
+                        this.persons.splice(index,1,newP)
+                    }
+
+                }
+
+
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

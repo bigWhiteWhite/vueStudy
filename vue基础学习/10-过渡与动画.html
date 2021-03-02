@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        /*显示或隐藏的过滤效果*/
+        .xxx-enter-active,.xxx-leave-active{
+            transition: opacity 1s;
+        }
+        /*隐藏时的样式*/
+        .xxx-enter,.xxx-leave-to{
+            opacity: 0;
+        }
+        /*显示的过滤效果*/
+        .yyy-enter-active{
+            transition: all 1s;
+        }
+        /*隐藏的过滤效果*/
+        .yyy-leave-active{
+            transition:all 3s;
+        }
+        /*隐藏时的样式*/
+        .yyy-enter,.yyy-leave-to{
+            opacity: 0;
+            transform: translateX(20px);
+        }
+    </style>
+</head>
+<body>
+<!--
+
+    1.本质上就是操作css的transition或animation
+    2.vue会给目标元素添加/移除特定的class
+    3.过渡的相关类名
+        xxx-enter-active：指定显示的transition
+        xxx-leave-active：指定隐藏的transition
+        xxx-enter/xxx-leave-to：指定隐藏时的样式  进入之前和离开之后都是隐藏时的类名,active在中间
+-->
+    <div id="demo">
+        <button @click="isShow=!isShow">toggle</button>
+        <transition name="xxx">
+            <p v-show="isShow" >hello</p>
+        </transition>
+    </div>
+  <div id="demo2">
+        <button @click="isShow=!isShow">toggle</button>
+        <transition name="yyy">
+            <p v-show="isShow" >hello</p>
+        </transition>
+    </div>
+
+</body>
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+
+             new Vue({
+                el: '#demo',
+                data(){
+                     return   {isShow:true}
+                },
+
+            })
+             new Vue({
+                el: '#demo2',
+                data(){
+                     return   {isShow:true}
+                },
+
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

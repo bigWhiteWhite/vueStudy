@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        <!--
+            1.条件渲染指令
+                v-if
+                v-else
+                v-show
+            2.比较v-if和v-show
+                如果需要频繁切换v-show 较好
+			3.this.$nextTick可以回调获取更新的DOM 
+        -->
+
+<div id="demo">
+    <p v-if="ok">成功了</p><!--这个是将标签移除-->
+    <p v-else>失败了</p>
+
+    <p v-show="ok">表白成功</p> <!--改变的是style的display的none，元素还在内存里面，只是没有显示-->
+    <p v-show="!ok">表白失败</p>
+
+    <button @click="ok=!ok">切换</button>
+	<input type="text" ref='input' v-show="ok02"/>
+</div>
+
+        <script type="text/javascript" src="vue.js"></script>
+        <script type="text/javascript">
+            new Vue({
+                el:'#demo',
+                data:{
+                    ok:false,
+					ok02:false
+                },
+				mounted:{
+					this.ok02 = true
+					/* this.$nextTick是在DOM更新循环之后执行延迟回调，在修改数据之后使用this.$nextTick可以回调获取更新的DOM */
+					this.$nextTick(() => {
+						this.$refs.input.focus()
+					})
+				}
+
+            })
+
+        </script>
+
+</body>
+</html>

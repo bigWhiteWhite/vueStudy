@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+		1：响应式数据的理解
+			我们数据变化可以让我们的视图重新更新
+			
+			数组和对象类型当值变化时如何劫持到，对象内部通过defineReactive方法，使用Object.defineProperty
+			将属性进行劫持(只会劫持已经存在的属性)，数组则是通过重新书写数组方法来实现。
+		 -->
+		<!-- 
+		1.数据代理：通过一个对象代理对另外一个对象中属性的操作(读/写)
+		2.vue数据代理：通过vm对象来代理data对象中所有属性的操作
+		3.好处：更方便的操作data中的数据
+		4.基本实现流程
+			a.通过Object.defineProperty()给vm添加与data对象的属性对应的属性描述符
+			b.所有添加的属性都包含getter/setter
+			c.getter/setter内部去操作data中对应的属性数据
+		 -->
+		<div id='test'></div>
+	</body>
+	<script src="MVVM/compile.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/mvvm.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/observer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/watcher.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		const vm=new MVVM({
+			el:'#test',
+			data:{
+				name:'feifei'
+			}
+		})
+		console.log(vm.name,vm)//feifei vm代理对data数据的读操作
+		//vm加上了name属性，data里面有什么属性就加什么属性，而name属性本身没有存值，通过getter从data里面取值
+		//<get name()>: function get()​  读取this.name
+		
+		//<set name()>: set(t)   监视set(t)this.name=xxx  xxx为形参传进去
+		vm.name = 'xiaoxiao' // vm代理对data数据的写操作
+		console.log(vm._data.name,vm.name)//xiaoxiao
+	</script>
+</html>

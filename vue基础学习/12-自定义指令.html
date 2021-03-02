@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+         [v-clock]{
+             display: none;
+         }
+    </style>
+</head>
+<body>
+<!--
+    1.注册全局指令(所有的vue对象实例都可以使用)
+        Vue.directive('my-directive',function(el,binding){//el：标签
+          el.innerHTML = binding.value.toUpperCase()
+        })
+    2.注册局部指令
+        directive ： {
+            'my-directive' ：{
+                bind(el,binding){
+                    el.innerHTML=binding.value.toUpperCase()
+                }
+            }
+        }
+    3.使用指令
+        v-my-directive='xxx'
+-->
+<!--
+    需求；自定义两个指令
+            1.功能类似与v-text，但转换为全大写    v-upper-text
+            1.功能类似与v-text，但转换为全小写    v-lower-text
+-->
+<div id="example-2">
+        <p v-upper-text="mag1"></p>
+        <p v-lower-text="mag1"></p>
+</div>
+<div id="example-3">
+        <p v-upper-text="mag2"></p>
+        <p v-lower-text="mag2"></p>
+</div>
+
+</body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+            //定义全局指令
+            //el：指令属性所在的标签对象
+            //binding：包含指令相关信息数据的对象
+            Vue.directive('upper-text',function (el,binding) {
+                console.log(el,binding)
+                el.textContent=binding.value.toUpperCase()
+            })
+            new Vue({
+                el: '#example-2',
+                data: {
+                    mag1:'NBA I LOVE '
+                },
+                directives:{//局部指令，只在当前实例vm管理范围有效
+                    'lower-text'(el,binding) {
+                        el.textContent=binding.value.toLowerCase()
+                    }
+                }
+            })
+            new Vue({
+                el: '#example-3',
+                data: {
+                    mag2:'NBA I hate '
+                },
+
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

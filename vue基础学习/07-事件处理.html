@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    1.绑定监听：
+        v-on：xxx="fun"
+        @xxx="fun"
+        @xxx="fun(参数)"
+        默认事件形参：event
+        隐含属性对象：$event
+    2.事件修饰符：
+        .prevent: 阻止事件的默认行为 event.preventDefault()
+        .stop： 停止事件冒泡 event.stopPropagation()
+    3.按键修饰符
+        .keycode:操作的是某个关键keycode值的键
+        .enter:操作的是enter键
+
+-->
+    <div id="demo">
+       <h2>1.绑定监听</h2>
+        <button @click="test1">test1</button>
+        <button @click="test2('nihao')">test2</button>
+        <button @click="test3">test3</button>
+        <button @click="test4(123,$event)">test4</button>
+
+       <h2>2.事件修饰符</h2>
+        <div style="width: 200px;height: 200px;background: red;" @click="test5">
+            <div style="width: 100px;height: 100px;background: blue;" @click.stop="test6"></div><!--加上stop就停止了事件冒泡-->
+        </div>
+
+        <a href="http://www.baidu.com" @click.prevent="test7">去百度</a>
+
+       <h2>3.按键修饰符</h2>
+        <input type="text" @keyup.13="test8">
+        <input type="text" @keyup.enter="test8">
+    </div>
+
+</body>
+
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+
+            new Vue({
+                el: '#demo',
+                data: {
+                    test1(){
+                        alert('aaaa')
+                    },
+                    test2(msg){
+                        alert(msg)
+                    },
+                    test3(event){
+                        alert(event.target.innerHTML)
+                    },
+                    test4(num,event){
+                        alert(num+'---'+event.target.innerHTML)
+                    },
+                    test5(){
+                       alert('out')
+                    },
+                    test6(){//事件有冒泡，点击时先有in，又有out，要阻止事件冒泡
+                        //event.stopPropagation()
+                        alert('in')
+                    },
+                    test7(){
+                        //event.preventDefault()
+                        alert('baidu')
+                    },
+                    test8(event){
+                        //event.preventDefault()
+                        alert(event.target.value+'---'+event.keyCode)
+                    }
+                },
+
+
+
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

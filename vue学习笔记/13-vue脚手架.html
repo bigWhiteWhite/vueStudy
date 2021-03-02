@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<
+    首先使用npm下载vue的脚手架：cnpm install -g vue-cli  使用淘宝镜像安装
+    然后打开你想放的文件位置的cmd，输入vue，在选择下载模板
+    webpack  webpack-simple  browserify  browserify-simple  pwa  simple
+    然后输入模板指令 vue init webpack vuedemo(项目名称，不可大写)
+
+    cnpm install webpack webpack-cli -g  //下载webpack依赖
+    cnpm install -g vue-cli
+    vue init webpack vuedemo(项目名称，不可大写)
+	cnpm install --save vuex
+	
+	npm i node-sass  style-loader -D   下载sass    "node-sass": "^4.14.1"更改pageage的sass的配置 npm i node-sass@4.14.1  style-loader -D  
+	npm install sass-loader@7.3.1 --save-dev
+	在build中的webpack.base.conf中的module中的rules加入
+	{
+	   test: /\.scss$/,
+	   loaders:['style','css','sass']
+	},
+	<style lang="scss" scoped>
+	</style>
+                            可选的库
+                                cnpm install stylus stylus-loader --save-dev
+	
+    进去项目cmd输入cnpm install 下载所有依赖
+    打包运行 cnpm run dev   打开浏览器
+
+    打包：cnpm run build   会在本地对当前的项目进行编译打包，最终生成一个dist文件夹
+    发布：
+        1.使用静态服务器工具包
+            cnpm install -g serve
+                  serve dist
+                  访问：http：//localhost:5000
+
+        2.使用动态web服务器(tomcat)
+            修改配置：webpack.prod.conf.js(在build里面)
+                out{
+                    publicPath:'/xxx/'  打包文件夹的名称
+                }
+            重新打包：！！！
+                npm run build
+            修改dist文件夹为项目名称：xxx
+            将xxx拷贝到运行的tomcat的webapps目录下
+            访问：http://localhost:8080/xxx
+
+
+vue-cli · Failed to download repo vuejs-templates/webpack-simple: tunneling socket could not be established, cause=connect ECONNREFUSED 127.0.0.1:8086
+
+问题：npm代理问题
+解决：最易解决的方法就是在终端输入 npm config set http-proxy null
+
+在config下的index.js中的build对象中的/前加上 .
+
+严格模式的关闭可以到config下的index.js中找到Eslint改为false
+
+
+
+</body>
+</html>

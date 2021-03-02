@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+        需要jquery库:cnpm install jquery --save
+
+            1.  在webpack.base.conf.js声明变量
+                var webpack = require('webpack')
+            2.  然后在webpack.base.conf.js中的module.export加入,实现按需打包
+                plugins: [
+                new webpack.optimize.CommonsChunkPlugin('common.js'),
+                new webpack.ProvidePlugin({
+                jQuery: "jquery",
+                $: "jquery"
+                })
+                ]
+
+        cnpm install --save bootstrap
+        cnpm install --save popper.js
+
+        mian.js里添加
+        import $ from 'jquery';  如果是用$，那么哪个组件要用给哪个组件
+        import 'bootstrap/dist/css/bootstrap.min.css'
+        import 'bootstrap/dist/js/bootstrap.min'
+
+        jquery获取元素要点
+        $("p").parent()返回直接的父亲（1个）；$("p").parents()返回所有的祖先
+        $("#div1").children():返回所有直接的孩子节点，不会返回所有的子孙节点
+        $("#div1").contents():返回下面的所有内容，包括节点和文本。这个方法和children()的区别就在于，包括空白文本，也会被作为一个 jQuery对象返回，children()则只会返回节点
+
+        通过兄弟节点查找节点
+        $(node).prev():返回上一个兄弟节点（只有一个）
+
+        $(node).prevAll()，返回所有之前的兄弟节点(多个)
+
+        $(node).next()：返回下一个兄弟节点（只有一个）
+
+        $(node).nextAll(): 返回所有之后的兄弟节点（多个）
+
+        $(node).siblings()：返回兄弟姐妹节点，不分前后
+
+
+</body>
+</html>

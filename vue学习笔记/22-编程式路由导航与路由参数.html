@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	
+	1:抛出了两个对象  $router  $route (路由信息对象)挂载到了Vue实例化对象
+		$router:将VueRouter的实例化对象绑定在Vue上面去，通过这个属性可以调用很多vueRouter的方法，比如push(),replace(),go()
+		$route:路由信息属性，可以查看params动态路由参数和query查询等路由属性
+		
+	 地址栏 路由范式                                                                 浏览器后面的显示
+		 <router-link :to = "{name:'userP',params:{id:1}}">用户1</router-link> xxxxx.html#/user/1    params 动态路由参数
+		 <router-link :to = "{name:'userQ',query:{userId:2}}">用户2</router-link> ooooo.html#/user?userId = 1  query
+			routes:[
+				// 路由匹配的规则
+				{
+					//动态路由参数 以冒号开头
+					path:'/user/:id',
+					name:'userP',
+					component:UserParams
+				},
+				{
+					path:'/user',
+					name:'userQ',
+					component:UserQuery
+				}
+			]
+编程式路由导航：
+    通过js的方式实现页面跳转
+		this.$router.push(path):相当于点击路由链接(可以返回到当前路由界面)
+		this.$router.replace(path):用新路由替换当前路由(不可以返回到当前路由界面)
+		this.$router.back(path)：请求（返回）上一个记录路由
+	
+	<button @click="pushShow(message.id)">push查看</button>
+	<button @click="replaceShow(message.id)">replace查看</button>
+
+	<button @click="$router.back()">回退</button>
+
+	pushShow (id){
+		this.$router.push(`/home/message/detail/${id}`)
+	},
+	replaceShow (id) {
+		this.$router.replace(`/home/message/detail/${id}`)
+	},
+</body>
+</html>

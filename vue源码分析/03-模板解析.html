@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<!-- 
+			1.将el的所有子节点取出，添加到一个新建的文档fragment对象中
+			2.对fragment中的所有层次子节点递归进行编译解析处理
+				对表达式文本节点进行解析
+				对元素节点的指令属性进行解析
+					对事件指令解析
+		 -->
+		 <div id="test">
+			 <p>{{name}}</p>
+		 </div>
+	</body>
+	<script src="MVVM/compile.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/mvvm.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/observer.js" type="text/javascript" charset="utf-8"></script>
+	<script src="MVVM/watcher.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		const vm=new MVVM({
+			el:'#test',
+			data:{
+				name:'feifei'
+			}
+		})
+	</script>
+</html>

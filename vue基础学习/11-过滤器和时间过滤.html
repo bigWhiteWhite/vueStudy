@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<!--
+    什么是过滤器？
+        功能：对要显示的数据进行特定格式化后在显示
+        注意：并没有改变原本的数据，可是产生新的对应的数据
+    1.自定义过滤器
+        Vue.filter(filterName,function(value[,arg1,arg2,...]){
+            //进行一定的数据处理
+            return newValue
+        }
+    2.使用过滤器:filterName为过滤器的名字，调用过滤器返回一个值到myData
+        <div>{{myData|filterName}}</div>
+        <div>{{myData|filterName(arg)}}</div>
+
+-->
+<div id="example-2">
+        <h2>显示格式化的日期和时间</h2><br>
+        <p>{{date}}</p><br>
+        <p>完整版本：{{date | dateString}}</p>
+        <p>年月日：{{date | dateString('YYYY-MM-DD')}}</p>
+        <p>时分秒：{{date | dateString('HH:mm:ss')}}</p>
+</div>
+
+</body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+            //自定义过滤器
+            Vue.filter('dateString',function (value,format) {//value接受使用过滤器的值，format如果传了值为format，没有为'YYYY-MM-DD HH:mm:ss'
+                return moment(value).format(format || 'YYYY-MM-DD HH:mm:ss');
+            })
+
+            new Vue({
+                el: '#example-2',
+                data: {
+                    date:new Date()
+                }
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

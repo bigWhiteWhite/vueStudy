@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--
+    三个阶段：初始化显示(mounted前) 更新 死亡  每个阶段都会带有生命周期的回调函数(勾子函数）
+    1.vue对象的生命周期
+        1）初始化显示
+               beforeCreate()
+               created()
+               beforeMount()
+               mounted()
+       2)更新显示：this.xxx=value
+                beforeUpdate()
+                updated()
+       3)销毁vue实例：vm.$destroy()
+                beforeDestroy()
+                destroyed()
+
+    2.常用的生命周期方法
+        created()/mounted():发送ajax请求，启动定时器等异步任务  mounted.挂载:先在内存加载好，再一次性发送到页面去
+        beforeDestory():做收尾工作，如：清除定时器
+-->
+    <div id="demo">
+        <button @click="destoy">destoy vm</button>
+        <p v-show="isShow">asjahjdhjs</p>
+    </div>
+
+</body>
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+
+            const vm= new Vue({
+                el: '#demo',
+                data: {
+                    isShow:true
+                },
+                //初始化
+                beforeCreate(){
+                    console.log('beforeCreate')
+                },
+                created(){
+                    console.log('created')
+                },
+                beforeMount(){
+                    console.log('beforeMount')
+                },
+                mounted(){//初始化显示之后立即调用(1次）
+                    console.log('mounted')
+
+                    this.timer=setInterval( ()=> {
+                        console.log('-----')
+                        this.isShow=!this.isShow
+                    },1000)
+                },
+
+                //更新
+                beforeUpdate(){
+                    console.log('beforeUpdate')
+                },
+                updated(){
+                    console.log('updated')
+                },
+
+                //死亡阶段
+                beforeDestroy(){//死亡之前调用(1次)
+                    console.log('beforeDestroy')
+                    //清除定时器
+                    clearInterval(this.timer)
+                },
+                destroyed(){
+                    console.log('destroy')
+                },
+
+
+                methods:{
+                    destoy(){
+                        //干掉vm
+                        this.$destroy()//销毁实例
+                    },
+                },
+
+
+
+
+
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

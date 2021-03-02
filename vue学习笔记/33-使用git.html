@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		
+！！！只有有.gitde文件才可以使用git命令，看有没有分支名称
+		git init .				创建一个git库
+		git remote add origin git@github.com:bigWhiteWhite/learngit.git   learngit.git
+		git remote add origin +ssh  关联远程仓库
+		git remote -v     		查看有无关联成功		
+		git clone + ssh地址   	克隆远程仓库的文件
+		git add .   			将当前目录提交到暂存区
+		git status  			查看文件状态
+		git commit -m "备注"   	提交并备注提交信息
+		git push origin master 	将本地目录提交到远程仓库
+		git pull origin master 	更新合并远程目录到本地，master是分支名称
+		git branch +分支名		创建分支
+		
+		一.流程：
+		1.创建一个git库
+		2.下载脚手架
+		5.git remote add origin git 关联到远程仓库
+		4.执行 add commit push 这样就把本地添加到远程仓库
+		
+		
+		
+		二.分支：
+		master就是分支，生成环境的分支(可以发布在线上)  git  merge(合并)/git fetch(更新)
+		develop或dev，开发环境总的分支
+		git checkout -b 分支名   切换分支，如果没有这个分支就要加-b
+			git add . 
+			git commit -m "备注"
+			git push origin 分支名  更新分支的操作
+		
+		
+		
+		本地项目(不受git管理的项目)同步远程项目仓库
+		1.git init   可以使用git命令 
+			git add .  
+			git commit -m "备注"
+			git remote add origin +ssh  关联远程仓库
+		2.git push origin master  出现错误...git pull...
+		3.git pull origin master 出现错误fatal：refusing to merge unrelated histories 		不允许合并没有关联的历史记录
+		4.git pull origin master --allow-unrelated-histories 	强制关联更新代码
+		5.git push origin login
+		
+	</body>
+</html>

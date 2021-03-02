@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="test">
+    <p v-my-directive="mag"></p>
+</div>
+</body>
+<script type="text/javascript" src="../vue.js"></script>
+<script type="text/javascript" src="./vue-myPlugin-js"></script>
+<script type="text/javascript">
+    //声明使用插件
+    console.log(window.MyPlugin)
+
+    Vue.use(MyPlugin) //从内部会执行MyPlugin，install（Vue）
+    Vue.myGlobalMethod()
+    const vm=new Vue({
+        el:'#test',
+        data:{
+            msg:'i love you',
+            mag:'i love you'
+        }
+    })
+    vm.$myMethod()
+</script>
+</html>

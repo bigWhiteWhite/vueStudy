@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+被最新版本坑了一天可以去官网仔细看
+cnpm install vue-awesome-swiper --save   
+cnpm install swiper@5.4.5 --save
+
+npm install vue-awesome-swiper@3 --save-dev
+cnpm install swiper@5.4.5 --save
+先去node-modules里面查看一下具体的位置在决定
+<swiper ref="mySwiper" :options="swiperOptions" id="mySwiper">
+    <swiper-slide><img src="../../resource/backimg/火影忍者02.png" alt=""></swiper-slide>
+    <swiper-slide><img src="../../resource/backimg/火影忍者01.jpg" alt=""></swiper-slide>
+    <swiper-slide><img src="../../resource/backimg/火影忍者03.png" alt=""></swiper-slide>
+    <swiper-slide><img src="../../resource/backimg/火影忍者04.jpg" alt=""></swiper-slide>
+    <swiper-slide><img src="../../resource/backimg/火影忍者05.png" alt=""></swiper-slide>
+    <div class="swiper-pagination" slot="pagination"></div>
+</swiper>
+
+1.引入全局
+    import Vue from 'vue'
+    import VueAwesomeSwiper from 'vue-awesome-swiper'
+    import 'swiper/css/swiper.min.css'   //一般使用这个(cnpm install swiper@5.4.5 --save版本)
+    如果是6.0版本以上
+    import 'swiper/swiper-bundle.css'
+	或者
+	import 'swiper/dist/css/swiper.css'
+	
+    Vue.use(VueAwesomeSwiper, })
+2.引入需要的组件
+    import Swiper from 'swiper';
+    import 'swiper/css/swiper.min.css'
+
+    components: {
+        Swiper,
+        SwiperSlide
+    },
+    directives: {
+        swiper: directive
+    },
+    data() {
+        return {
+            swiperOptions: {
+                effect : 'fade',
+                autoplay:true,
+                loop:true,
+                delay: 1000,
+                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                pagination: {
+                el: '.swiper-pagination',
+                clickable:true
+                },
+        // Some Swiper option/callback...
+             }
+        }
+    }
+3.可以new多个Swiper，但是不要删除类名
+
+4.知识点
+    a:slidesPerView：设置slider容器能够同时显示的slides数量(carousel模式)，横向滑块效果
+    b:pagination 使用分页器导航。分页器可使用小圆点样式（默认）、分式样式或进度条样式。分页器的位置可以再看一下视频，照片图片滑动效果
+        renderBullet(index, className)：渲染分页器小点。这个参数允许完全自定义分页器的指示点。接受指示点索引和指示点类名作为参数。
+    c:加了zoom以后使用effect : 'cube',以后图片之间没有间隙
+        zoom 开启焦距功能：双击slide会放大/缩小，并且在手机端可双指触摸缩放。可设置缩放选项或设为true使用默认值
+            有个小bug，解决
+                        需要在slide中增加类名swiper-zoom-container，结构如下：
+                        <div class="swiper-slide">
+                            <div class="swiper-zoom-container">
+                                <img src="path/to/image">
+                            </div>
+                        </div>
+    d:缩略图
+
+5.坑：
+    observer:true,//修改swiper自己或子元素时，自动初始化swiper
+    observeParents:true,//修改swiper的父元素时，自动初始化swiper
+    pagination: {
+    el: '.swiper-pagination',
+    clickable:true
+    },
+
+    //分割
+                /*export default {
+                mounted() {
+                this.$nextTick(function(){
+                var mySwiper=new Swiper('.swiper-container',{
+                observer:true,//修改swiper自己或子元素时，自动初始化swiper
+                observeParents:true,//修改swiper的父元素时，自动初始化swiper
+                //loop:true,
+                autoplay:{
+                stopOnLastSlide:true
+                },
+                navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+                },
+                pagination: {
+                el:'.swiper-pagination',
+                clickable:true
+                },
+                scrollbar: {
+                el: '.swiper-scrollbar',
+                },
+
+                })
+                })
+                }
+
+                }*/
+</body>
+</html>

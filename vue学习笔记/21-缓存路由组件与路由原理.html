@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	1：路由原理：
+	（1）传统开发方式 url改变后，立刻发生请求响应整个页面，有可能资源过多，传统开发会让页面出现白屏
+	（2） SPA  Single Page Application 单页面应用
+		锚点值的改变后 不会立刻发送请求，而是在某个合适的时机，发起ajax请求，
+		局部改变页面的数据 
+	
+		优点：页面不立刻跳转 用户体验好
+	
+		router-link默认会被渲染成a标签，to默认会被渲染成href属性
+		
+		向路由组件传递数据：
+				通过路由链接：路由路径参数：param  query
+				通过标签:<router-view msg="abcd"></router-view>
+	
+	2：单界面页面(SPA)：不向后台发请求，点击路由链接本身不进行跳转不向后台发请求，局部跳转
+		路由链接：只是更新不同的路由组件，路由组件内部会发送ajax请求
+	
+		官方提供的用来实现SPA的vue插件：vue-router
+		cnpm install vue-router --save
+	
+	3:通过name的方式跳转
+		<router-link :to = "{name:'login'}">登录</router-link>
+		<router-link :to = "{name:'register'}">注册</router-link>
+		
+		<!--路由组件的出口-->
+		<router-view></router-view>
+		
+	4:缓存路由组件
+		当切换的时候旧的路由组件就会死亡，切换回去的时候重新创建
+		缓存的是组件对象
+
+		如何缓存
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
+
+</body>
+</html>

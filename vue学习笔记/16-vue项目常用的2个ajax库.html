@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    vue-resource    cnpm install vue-resource --save
+        vue插件，非官方库
+
+        编码：
+        //引入模块,在main.js中引入
+        import VueResource from 'vue-resource'
+        //使用插件
+        Vue.use(VueResource)
+
+        //通过vue/组件对象发送ajax请求
+        this.$http.get('/someUrl').then(
+        (response)=>{
+            //success callback
+            console.log(response.data) //返回结果数据
+        },(response)=>{
+            //error callback
+            console.log(response.statusText)//错误信息
+        })
+
+    axios           cnpm install  axios --save
+        编码：
+        //引入模块,哪里使用哪里引入，未必是main.js
+        通用的ajax请求库，官方推荐
+        axios.get(url).then(
+        response => {
+        //成功了
+        const result = response.data
+        //得到最受欢迎的repo
+        const mostPepo = result.items[0]
+        this.repoUrl = mostPepo.html_url
+        this.repoName= mostPepo.name
+        }).catch(error => {
+        alert('请求失败222')
+        })
+
+
+
+
+
+</body>
+</html>

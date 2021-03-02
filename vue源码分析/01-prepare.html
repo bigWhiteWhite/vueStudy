@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<ul id="fragment-test">
+			<li>test1</li>
+			<li>test2</li>
+			<li>test3</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		//1.[].slice.call(lis):将伪数组转换为真数组
+			//伪数组不是数组，只是可以使用length和有索引而已，就比如Dom操作获取ul中的li
+			const lis=document.getElementsByTagName('li')
+			const list02=Array.prototype.slice.call(lis)  从数组原型上获取这个方法，call指定什么谁去调用。
+				//伪数组没有splice这个slice，这就是call的作用：让任意函数成为指定对象的方法进行调用，Array.prototype.slice返回一个函数。
+				
+		//2.node.nodeType：得到节点类型，不同类型的节点有特定的行为，一旦涉及到调用特有行为的时候，首先你要保证类型是对的
+			//节点：document(文档节点，整个Html页面) Element(元素节点) Attr(属性节点) Text(文本节点)
+			const elementNode = document.getElementById('test') //1
+			const attrNode = elementNode.getAttributeNode('id')//2
+			const textNode = elementNode.firstChild//3
+			consolo.log(elementNode.nodeType,attrNode.nodeType,textNode.nodeType)
+			
+		//3.Object.defineProperty(obj,propertyName,{}):给对象添加属性(指定描述符)，IE8不支持这语法，这个方法是vue的核心语法，所以vue不支持IE8
+		
+			Object.defineProperty(要定义属性的对象,要定义或修改的属性的名称或 Symbol,要定义或修改的属性描述符。)
+			const obj = {
+				firstName:'A',
+				lastName:'B',
+			}
+			//给obj添加fullName属性
+			/* 属性描述符
+				1.数据描述符
+					configurable:是否可以重新定义
+					enumerable：是否可以枚举
+					value:初始值
+					writable:是否可以修改属性值
+				2.访问描述符
+					get：回调函数，根据其他相关的属性动态计算得到当前属性值
+					set：回调函数，监视当前属性值的变化，更新其他相关的属性值 */
+			Object.defineProperty(obj,'fullName',{
+				get(){
+					return this.firstName +'-'+ this.lastName
+				},
+				set(value){
+					const names=value.split('-')
+					this.firstName = names[0]
+					this.lastName  = names[1]
+				}
+			})	
+			
+			Object.defineProperty(obj,'fullName',{//不能重新定义
+				configurable:false
+				enumerable:true  //改为false以后Obeject.keys(obj)没法枚举这个属性
+				value:'E-F'
+				writable:false
+			})
+			
+		//4.Obeject.keys(obj):得到对象自身可枚举属性组成的数组
+			const names = Object.keys(obj)
+			consolo.log(names)
+			
+		///5.obj.hasOwnProperty(prop)：判断prop是否是obj自身的属性
+			consolo.log(obj.hasOwnProperty('fullName'),obj.hasOwnProperty('toString')) //true,false
+			 
+		//6.DocumentFragment：文档碎片(高效批量更新多个节点)
+		//docuemnt:对应显示的页面，包含n个elementt  一旦更新document内部的摸个元素 界面更新
+				//假如页面要更新所有li里面的文本，如果没有优化，那就是一个个的更新，一万个就更新一万次
+		//DocumentFragment：内存中保存n个element的容器对象(不与界面关联)，如果更新fragment中的某个element元素，界面不变
+		//从多次更新到一次批量更新，在fragment中更新li，更新完毕在放入界面，减少更新界面的次数
+		
+		/* 
+		<ul id="fragment-test">
+			<li>test1</li>
+			<li>test2</li>
+			<li>test3</li>
+		</ul>
+		 */
+		const ul = document.getElementById('fragment-test')
+		//1.创建fragment
+		const fragment = document.createDocumentFragment()
+		//2.取出ul中所有子节点取出保存到fragment,包括换行的文本节点
+		let child
+		while(child=ul.firstChild) {//一个节点只能有一个父亲
+			fragment.appendChild(child)//先将child从ul中移除，添加为fragment子节点
+		}
+		
+		//3.更新fragment中所有li的文本
+		Array.prototype.slice.call(fragment.childNodes).forEach(node=>{
+			if (node.nodeType===1) {//元素节点<li>
+				node.textContent = 'nihao'
+			}
+		})
+		
+		//4，将fragment插入ul
+		ul.appendChild(fragment)
+	</script>
+</html>

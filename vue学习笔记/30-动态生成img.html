@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+注意！！！要使用require！！！
+
+1:图片不多，用data存储
+<div class="list" v-for="(item,index) in List" :key="index">
+    <div class="backface" ><img :src="item.path"></div><!--allBackimg(home)-->
+    <div class="face"></div>
+</div>
+data(){
+    return {
+        List:[{"path":require('./../../resource/backimg/火影忍者00.jpg')}]
+    }
+},
+2.只用一种图片
+<img :src="require('./../../resource/backimg/火影忍者00.jpg')"></div>
+
+3.使用函数动态生成img，注意因为是v-for生成，所以要传递index
+<div class="list" v-for="(item,index) in List" :key="index">
+    <div class="backface" ><img :src="allBackimg(index)"></div><!--allBackimg(home)-->
+    <div class="face"></div>
+</div>
+allBackimg(index){
+    return  require("./../../resource/backimg/火影忍者00.jpg");
+}
+
+</body>
+</html>

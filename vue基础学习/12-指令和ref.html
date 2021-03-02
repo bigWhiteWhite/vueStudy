@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+         [v-cloak]{
+             display: none;
+         }
+    </style>
+</head>
+<body>
+<!--
+    常用内置指令
+        1.v-text:更新元素的textContent
+        2.v-html：更新元素的innerHTML
+        3.v-if：如果为true，当前标签才会输出到页面
+        4.v-else:如果为false，当前标签才会输出到页面
+        5.v-show：通过控制display样式来控制显示/隐藏
+        6.v-for：遍历数组/对象
+        7.v-on：绑定事件监听，一般简写为@
+        8.v-bind：强制绑定解析表达式，可以省略为冒号
+        9.v-model：双向数据绑定
+        10.ref：指定唯一标识，vuw对象通过$els属性访问这个元素对象
+        11.v-cloak：防止闪现，暴露出表达式，与css配合:[v-cloak]{display:none}
+-->
+<div id="example-2">
+        <p ref="content">ashisj s i</p>
+        <p ref="nihao" v-cloak>{{mag}}</p>
+
+        <button @click="hint">提示</button>
+</div>
+
+</body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/moment.js/2.21.0/moment.min.js"></script>
+	<script type="text/javascript" src="vue.js"></script>
+	    <script type="text/javascript">
+            new Vue({
+                el: '#example-2',
+                data: {
+                    mag:'你好'
+                },
+                methods:{
+                    hint(){
+                       alert( this.$refs.content.textContent)
+                       alert( this.$refs.nihao.textContent)
+                    }
+                }
+            })
+
+		</script>
+<!--
+MVVM:
+model：模型，数据对象(data）   将数据从内存中传给view
+view:视图，模板页面   控制DOM，将数据传给model数据对象
+viewModel：视图模型(vue的实例） 包括数据绑定和DOM监听
+
+-->
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	尚未实现！！！
+	路由骨架屏
+	1.npm install vue-skeleton-webpack-plugin
+	2.在项目src目录下创建Skeleton.vue文件，这个是骨架屏的显示页面
+	3.在src目录下搭建entry-skeleton.js文件，这个是配置骨架屏的进入页面
+	4.在build文件目录下搭建webpack.skeleton.conf.js文件，骨架屏的打包页面
+	5、在webpack.dev.conf.js、webpack.prod.conf.js加入以下代码
+			const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin')
+			
+			在webpack.prod.conf.js中配置
+				plugins: [
+				// inject skeleton content(DOM & CSS) into HTML
+				new SkeletonWebpackPlugin({
+				  webpackConfig: require('./webpack.skeleton.conf'),
+				  quiet: true,
+				  minimize: true,
+				  router: {
+					mode: 'history',
+					routes: [
+					  {
+						path: '',
+						skeletonId: 'skeleton-investmentfinancehome'
+					  },
+					  {
+						path: '/InvestmentFinance',
+						skeletonId: 'skeleton-investmentfinancehome'
+					  },
+					  {
+						path: '/InvestmentFinance/FinanceSubMenu/more',
+						skeletonId: 'skeleton-financesubmenu-more'
+					  },
+					  {
+						path: '/InvestmentFinance/WalletHome',
+						skeletonId: 'skeleton-wallethome'
+					  }
+					]
+				  }
+				})
+				]
+			
+	6.因为是在build中配置，所以只能打包后看见
+	<body>
+	</body>
+</html>

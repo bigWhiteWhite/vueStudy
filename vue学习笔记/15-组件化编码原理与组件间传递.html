@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+组件化编码
+    1.拆分组件
+    2.实现静态组件  显示的界面数据固定，没有交互
+    3.实现动态组件  初始化显示，交互
+
+    总css在根目录下的index.html引入，个别的样式各自引入
+    交互的数据如果是某个组件用到就放在某个组件上，如果是某些组件用得到就放在他们的父组件上
+    App.vue内的export default
+    data(){ //交互的数据,组件里面必须是函数
+        return {
+            comment:[
+                {name:'张三',content:'ssds'},{name:'李四’,content:'ssds'}
+            ]
+        }
+    }
+
+    组件间通信
+    数据在哪个组件，更新数据的行为(方法)就应该定义在哪个组件
+
+    将数据传给其他组件，通过标签属性的方式，假设App.vue传给list.vue  要记得引入组件的三个步骤3个步骤
+   <!-- <list :comment:'comment'/>--> 要记得加冒号
+
+    list组件要想要接受父组件App.vue的数据，必须声明接受属性，这个属性就会成为组件对象的属性
+    props:['comment']    只指定属性名
+
+    props：{              指定属性名和属性值的类型
+        comment:object
+        }
+
+        如果这个对象成功传到要去的组件，那么就可以正常使用
+        例如：大括号表达式等{{comment.name}}
+
+    组件通信的5种方式
+        prps
+        vue的自定义事件
+        pubsub第三方库
+        slot
+        vuex(后面单独讲）
+
+        props：
+            父子组件间通信的基本方式
+
+            属性值的2大类型：
+                一般：父组件--》子组件
+                函数：子组件--》父组件
+            隔层组件间传递：必须逐层传递(麻烦)
+            兄弟组件间：必须借助父组件（麻烦）
+
+            父组件主动获取子组件的数据和方法：
+                1.调用子组件的时候定义一个ref
+                <v-header ref="header"></v-header>
+
+                2.在父组件里面通过
+                this.$refs.header.属性
+                this.$refs.header.方法
+
+                子组件主动获取父组件的数据和方法：
+                this.$parent.数据
+                this.$parent.方法
+
+        vue自定义事件（绑定监听）        <Header @addTodo="addTodo"/>    this.$emit('addTodo',todo)
+            子组件与父组件的通信方式
+            用来取代function props
+            不适合隔层组件和兄弟间的通信
+
+        消息订阅与发布（PubSubJs库） cnpm install --save pubsub-js
+                import PubSub from 'pubsub-js'  哪个组件需要哪里引入
+            没有任何的位置要求，父子，兄弟都可以
+            订阅消息
+            PubSub.subscribe('msg',function(msg,data){})
+            发布消息
+            PubSub.publish('msg',data)
+
+        组件通信：slot   组件标签被反复用到
+            此方式用于父组件向子组件传递’标签数据‘
+
+            理解：一个组件里面有多个占位，左边1号，右边2号。。。
+                  占位只有传入特定的标签才会显示，向1号传一个img标签，1号显示，
+                  组件不仅数据有变化，结构也有变化
+
+            子组件：Child.vue
+                <slot name="xxx">不确定的标签结构1</slot>
+                <div>组件确定的标签结构</div>
+                <slot name="yyy">不确定的标签结构2</slot>
+            父组件：Parent.vue
+                <div slot="xxx">xxx对应的标签结构</div>
+                <div slot="yyy">xxx对应的标签结构</div>
+
+
+
+
+
+</body>
+</html>
